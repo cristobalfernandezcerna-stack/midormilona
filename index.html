@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Para Maite 🌸</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* === RESET Y FONDO ROSADO PASTEL === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(145deg, #ffe4ec, #ffd9e6, #fcccd9);
+            font-family: 'Cormorant Garamond', serif;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* === CORAZONES FLOTANDO === */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -80px;
+            color: rgba(255, 150, 180, 0.2);
+            font-size: 28px;
+            user-select: none;
+            animation: floatUp linear infinite;
+        }
+
+        .heart:nth-child(1) { left: 10%; font-size: 30px; animation-duration: 14s; animation-delay: 0s; }
+        .heart:nth-child(2) { left: 25%; font-size: 18px; animation-duration: 18s; animation-delay: 2s; }
+        .heart:nth-child(3) { left: 45%; font-size: 40px; animation-duration: 12s; animation-delay: 4s; }
+        .heart:nth-child(4) { left: 65%; font-size: 22px; animation-duration: 16s; animation-delay: 1s; }
+        .heart:nth-child(5) { left: 80%; font-size: 35px; animation-duration: 13s; animation-delay: 3s; }
+        .heart:nth-child(6) { left: 50%; font-size: 25px; animation-duration: 19s; animation-delay: 5s; }
+        .heart:nth-child(7) { left: 90%; font-size: 20px; animation-duration: 15s; animation-delay: 6s; }
+        .heart:nth-child(8) { left: 5%; font-size: 32px; animation-duration: 11s; animation-delay: 3.5s; }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.6);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.5;
+                transform: translateY(-30vh) rotate(15deg) scale(1);
+            }
+            100% {
+                transform: translateY(-120vh) rotate(-25deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        /* === BURBUJAS DE LUZ === */
+        .glow-orb {
+            position: fixed;
+            top: -20%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.3), transparent 70%);
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .glow-orb-bottom {
+            position: fixed;
+            bottom: -20%;
+            left: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 200, 210, 0.25), transparent 70%);
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* === CONTENEDOR DE LA CARTA (con scroll) === */
+        .carta-wrapper {
+            position: relative;
+            z-index: 10;
+            max-width: 440px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 5px;
+            border-radius: 40px 12px 40px 12px;
+            background: rgba(255, 240, 245, 0.25);
+            backdrop-filter: blur(20px) saturate(200%);
+            -webkit-backdrop-filter: blur(20px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(200, 100, 120, 0.3);
+            /* Importante: para que el scroll funcione bien en el contenedor */
+            touch-action: pan-y; 
+        }
+
+        .carta-wrapper::-webkit-scrollbar {
+            width: 4px;
+        }
+        .carta-wrapper::-webkit-scrollbar-track {
+            background: rgba(255, 200, 210, 0.2);
+            border-radius: 10px;
+        }
+        .carta-wrapper::-webkit-scrollbar-thumb {
+            background: #d46a7e;
+            border-radius: 10px;
+        }
+
+        /* === LA CARTA === */
+        .carta {
+            padding: 35px 28px 30px 28px;
+            text-align: center;
+            animation: aparecer 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        @keyframes aparecer {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* === TÍTULO === */
+        .carta h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-style: italic;
+            font-size: 26px;
+            color: #b35a6b;
+            letter-spacing: 1px;
+            border-bottom: 2px dashed rgba(200, 100, 130, 0.2);
+            padding-bottom: 15px;
+            margin-bottom: 18px;
+            text-shadow: 0 0 20px rgba(255, 150, 180, 0.2);
+        }
+        .carta h1 span {
+            color: #d46a7e;
+            font-weight: 400;
+        }
+
+        /* === FOTO === */
+        .foto-container {
+            margin: 5px 0 20px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .foto-container img {
+            width: 100%;
+            max-width: 220px;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 150, 180, 0.7);
+            box-shadow: 0 0 35px rgba(255, 150, 180, 0.3);
+        }
+
+        /* === CUERPO === */
+        .contenido {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 1.9;
+            color: #4d2e38;
+            text-align: left;
+            margin: 5px 0 15px 0;
+        }
+
+        .contenido p {
+            margin-bottom: 16px;
+        }
+
+        .contenido p:first-of-type::first-letter {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            font-weight: 700;
+            color: #d46a7e;
+            float: left;
+            line-height: 0.9;
+            margin-right: 8px;
+            margin-top: 4px;
+            text-shadow: 0 0 25px rgba(200, 100, 130, 0.2);
+        }
+
+        /* === CORAZÓN CON CURITA === */
+        .heart-wrapper {
+            position: relative;
+            display: inline-block;
+            margin: 12px auto 6px auto;
+            line-height: 1;
+        }
+
+        .corazon-glow {
+            font-size: 60px;
+            color: #e86a8a;
+            display: inline-block;
+            animation: latir 1.4s ease-in-out infinite;
+            filter: drop-shadow(0 0 35px rgba(200, 80, 120, 0.4));
+            line-height: 1;
+        }
+
+        @keyframes latir {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .curita {
+            position: absolute;
+            top: -8px;
+            right: -18px;
+            font-size: 34px;
+            transform: rotate(30deg);
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
+            animation: flotarCurita 2s ease-in-out infinite;
+            z-index: 20;
+            display: block;
+            line-height: 1;
+        }
+
+        @keyframes flotarCurita {
+            0% { transform: rotate(30deg) translateY(0); }
+            50% { transform: rotate(30deg) translateY(-6px); }
+            100% { transform: rotate(30deg) translateY(0); }
+        }
+
+        /* === BOTÓN DE REPRODUCCIÓN (estilo sutil) === */
+        .play-btn {
+            display: inline-block;
+            margin: 15px 0 10px 0;
+            padding: 12px 28px;
+            background: rgba(212, 106, 126, 0.85);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-family: 'Dancing Script', cursive;
+            font-size: 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(200, 80, 120, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            letter-spacing: 1px;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(200, 80, 120, 0.4);
+        }
+
+        .play-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* === FIRMA === */
+        .firma {
+            font-family: 'Dancing Script', cursive;
+            font-size: 25px;
+            color: #b35a6b;
+            margin-top: 5px;
+            letter-spacing: 1px;
+            border-top: 1px solid rgba(200, 100, 130, 0.2);
+            padding-top: 16px;
+        }
+
+        .firma span {
+            background: linear-gradient(135deg, #d46a7e, #b84a6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(200, 100, 130, 0.1);
+        }
+
+        .deco {
+            color: #c99aa8;
+            font-size: 13px;
+            letter-spacing: 5px;
+            margin-top: 10px;
+            opacity: 0.6;
+        }
+
+        /* === AUDIO OCULTO === */
+        #audioPlayer {
+            display: none;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 450px) {
+            .carta-wrapper {
+                max-height: 85vh;
+                border-radius: 32px 8px 32px 8px;
+            }
+            .carta {
+                padding: 25px 18px 25px 18px;
+            }
+            .carta h1 {
+                font-size: 22px;
+                padding-bottom: 12px;
+            }
+            .contenido {
+                font-size: 16.5px;
+                line-height: 1.8;
+            }
+            .contenido p:first-of-type::first-letter {
+                font-size: 34px;
+            }
+            .corazon-glow {
+                font-size: 50px;
+            }
+            .curita {
+                font-size: 28px;
+                top: -5px;
+                right: -12px;
+                transform: rotate(25deg);
+            }
+            @keyframes flotarCurita {
+                0% { transform: rotate(25deg) translateY(0); }
+                50% { transform: rotate(25deg) translateY(-4px); }
+                100% { transform: rotate(25deg) translateY(0); }
+            }
+            .firma {
+                font-size: 21px;
+            }
+            .foto-container img {
+                max-width: 160px;
+                border-width: 3px;
+            }
+            .heart {
+                font-size: 16px !important;
+            }
+            .play-btn {
+                font-size: 18px;
+                padding: 10px 24px;
+            }
+        }
+
+        @media (min-width: 700px) {
+            .carta-wrapper {
+                max-height: 85vh;
+                max-width: 520px;
+            }
+            .carta {
+                padding: 50px 45px 40px 45px;
+            }
+            .contenido {
+                font-size: 20px;
+            }
+            .foto-container img {
+                max-width: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Luces de fondo -->
+    <div class="glow-orb"></div>
+    <div class="glow-orb-bottom"></div>
+
+    <!-- Corazones flotando -->
+    <div class="floating-hearts">
+        <div class="heart">♥</div>
+        <div class="heart">♥</div>
+        <div class="heart">♥</div>
+        <div class="heart">♥</div>
+        <div class="heart">♥</div>
+        <div class="heart">♥</div>
+        <div class="heart">♥</div>
+        <div class="heart">♥</div>
+    </div>
+
+    <!-- ===== CONTENEDOR CON SCROLL ===== -->
+    <div class="carta-wrapper" id="cartaWrapper">
+
+        <!-- ===== CARTA PARA MAITE ===== -->
+        <div class="carta">
+            <h1>Para <span>Maite</span></h1>
+
+            <!-- FOTO DE AMBOS -->
+            <div class="foto-container">
+                <img src="img/img1.png" alt="Cristóbal y Maite 🌸">
+            </div>
+
+            <div class="contenido">
+                <p>Hoy, sin razón aparente, me dieron ganas de escribirle esto. Quizás porque entre mensaje y mensaje, y sobre todo en nuestras llamadas, me doy cuenta de que me encanta cómo es usted, Maite.</p>
+                <p>Llevamos apenas un par de semanas, pero hay algo en nuestra conversación que se siente distinto, como si nos conociéramos de antes. Me gusta su forma de ver las cosas, su risa al otro lado del teléfono y cómo me hace sentir en tan poco tiempo. Esa calidez que me regala cada noche se ha vuelto mi momento favorito del día.</p>
+                <p>No sé exactamente hacia dónde va esto, y no quiero apresurarlo, pero sí sé que a su lado el camino se ve hermoso. Quiero agradecerle por regalarme sus noches, por permitirme conocerla y por dejarme ser parte de su día a día. Ojalá podamos seguir construyendo esto con calma, con respeto y con mucho cariño.</p>
+                <p>Y cuando la vida le ponga una herida, aquí estaré yo, con mi curita lista para ayudar a sanarla. Porque usted, Maite, se lo merece todo.</p>
+            </div>
+
+            <!-- CORAZÓN CON CURITA -->
+            <div class="heart-wrapper">
+                <span class="corazon-glow">♥</span>
+                <span class="curita">🩹</span>
+            </div>
+
+            <!-- === BOTÓN PARA PAUSAR / REANUDAR (aparece después de iniciar) === -->
+            <button class="play-btn" id="playButton">🎵 Tocar para escuchar</button>
+
+            <!-- Reproductor de audio oculto -->
+            <audio id="audioPlayer" loop>
+                <source src="img/Melendi - Tu Jardín con enanitos (Videoclip oficial).mp3" type="audio/mpeg">
+                Tu navegador no soporta audio.
+            </audio>
+
+            <div class="firma">
+                — <span>Con todo mi cariño y respeto, Cristóbal</span>
+            </div>
+
+            <div class="deco">✦ ✦ ✦</div>
+        </div>
+
+    </div>
+
+    <!-- === JAVASCRIPT: Autoplay con "primer toque" === -->
+    <script>
+        const audio = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playButton');
+        const wrapper = document.getElementById('cartaWrapper');
+
+        let audioStarted = false; // Para saber si ya se inició el audio
+
+        // Función para iniciar el audio (reproducir)
+        function iniciarAudio() {
+            if (!audioStarted) {
+                audio.play().then(() => {
+                    audioStarted = true;
+                    playBtn.textContent = '🎵 Pausar';
+                    playBtn.style.background = 'rgba(180, 80, 100, 0.9)';
+                }).catch(error => {
+                    // Si falla, no pasa nada, el botón sigue funcionando.
+                    console.log('El audio no pudo iniciar automáticamente.');
+                });
+            }
+        }
+
+        // 1. Intentar reproducir al cargar la página
+        window.addEventListener('load', function() {
+            iniciarAudio();
+        });
+
+        // 2. Si el autoplay fue bloqueado, se inicia con el primer toque en la carta
+        wrapper.addEventListener('click', function() {
+            if (!audioStarted) {
+                iniciarAudio();
+            }
+        });
+
+        // También funciona con el primer toque en el botón (por si acaso)
+        playBtn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Evita que el click del botón active el evento del wrapper dos veces
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = '🎵 Pausar';
+                playBtn.style.background = 'rgba(180, 80, 100, 0.9)';
+                audioStarted = true;
+            } else {
+                audio.pause();
+                playBtn.textContent = '🎵 Tocar para escuchar';
+                playBtn.style.background = 'rgba(212, 106, 126, 0.85)';
+            }
+        });
+
+        // Actualizar el botón cuando el audio se reproduce o pausa por otros medios
+        audio.addEventListener('play', function() {
+            playBtn.textContent = '🎵 Pausar';
+            playBtn.style.background = 'rgba(180, 80, 100, 0.9)';
+        });
+
+        audio.addEventListener('pause', function() {
+            playBtn.textContent = '🎵 Tocar para escuchar';
+            playBtn.style.background = 'rgba(212, 106, 126, 0.85)';
+        });
+    </script>
+
+</body>
+</html>
