@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>13/06 — Un mes, Maite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Maru+Gothic:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night-1:#160a2e;
+    --night-2:#2b1150;
+    --sunset-orange:#ff6f4c;
+    --sunset-coral:#ff4d7a;
+    --sakura:#ffc2d1;
+    --neon-cyan:#5fe3ff;
+    --lantern-gold:#ffcf6b;
+    --paper:#fbf2e2;
+    --paper-dark:#eee0c8;
+    --ink:#3a2a2a;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--night-1);
+    color:var(--paper);
+    font-family:'Zen Maru Gothic', sans-serif;
+    overflow-x:hidden;
+    width:100%;
+  }
+  h1,h2,h3,.display{
+    font-family:'Shippori Mincho', serif;
+  }
+  .mono{
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:0.08em;
+  }
+
+  .bg-sky{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background:
+      radial-gradient(ellipse at 50% 78%, rgba(255,140,90,0.55), transparent 60%),
+      linear-gradient(180deg, var(--night-1) 0%, #3a1750 35%, #7a2e4d 62%, var(--sunset-orange) 88%, #ffb066 100%);
+  }
+
+  /* ---------- layout ---------- */
+  section{
+    position:relative;
+    z-index:2;
+    padding:6vh 6vw;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    gap:18px;
+  }
+  .hero .eyebrow{
+    color:var(--neon-cyan);
+    text-shadow:0 0 12px rgba(95,227,255,0.7);
+    font-size:0.85rem;
+    letter-spacing:0.35em;
+    text-transform:uppercase;
+  }
+  .hero h1{
+    font-size:clamp(3rem, 11vw, 6.5rem);
+    margin:0;
+    line-height:0.95;
+    background:linear-gradient(180deg, #fff 0%, var(--lantern-gold) 45%, var(--sunset-coral) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    filter:drop-shadow(0 0 26px rgba(255,111,76,0.45));
+  }
+  .hero .sub{
+    max-width:520px;
+    font-size:1.05rem;
+    opacity:0.9;
+    line-height:1.6;
+  }
+  .lantern-row{
+    display:flex;
+    gap:14px;
+    margin-top:6px;
+  }
+  .lantern-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--lantern-gold);
+    box-shadow:0 0 10px var(--lantern-gold);
+    animation:flicker 2.4s ease-in-out infinite;
+  }
+  .lantern-dot:nth-child(2){animation-delay:0.6s;}
+  .lantern-dot:nth-child(3){animation-delay:1.2s;}
+  @keyframes flicker{
+    0%,100%{opacity:0.5; transform:scale(0.9);}
+    50%{opacity:1; transform:scale(1.15);}
+  }
+  .scroll-hint{
+    margin-top:40px;
+    font-size:0.75rem;
+    opacity:0.6;
+    animation:bob 2s ease-in-out infinite;
+  }
+  @keyframes bob{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(8px);}
+  }
+
+  /* ---------- CANCIÓN ---------- */
+  .song-section{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding-top:2vh;
+    padding-bottom:6vh;
+  }
+  .song-title{
+    font-size:clamp(1.6rem,4.5vw,2.2rem);
+    margin-bottom:4px;
+  }
+  .song-title span{color:var(--sunset-coral);}
+  .song-caption{
+    opacity:0.75;
+    margin-bottom:30px;
+    font-size:0.95rem;
+  }
+  .song-caption strong{
+    color:var(--lantern-gold);
+    font-weight:500;
+  }
+  .audio-player{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    width:min(90vw, 480px);
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,194,209,0.2);
+    border-radius:16px;
+    padding:16px 20px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.4);
+  }
+  .audio-play-btn{
+    flex-shrink:0;
+    width:54px; height:54px;
+    border-radius:50%;
+    border:none;
+    background:linear-gradient(160deg, var(--sunset-orange), var(--sunset-coral));
+    box-shadow:0 0 20px rgba(255,111,76,0.5);
+    color:white;
+    font-size:1rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:transform .2s ease;
+  }
+  .audio-play-btn:hover{transform:scale(1.06);}
+  .audio-play-btn .icon-pause{display:none;}
+  .audio-play-btn.playing .icon-play{display:none;}
+  .audio-play-btn.playing .icon-pause{display:inline;}
+  .audio-info{
+    flex:1;
+    min-width:0;
+    text-align:left;
+  }
+  .audio-bar-track{
+    width:100%;
+    height:6px;
+    background:rgba(255,255,255,0.15);
+    border-radius:999px;
+    cursor:pointer;
+    overflow:hidden;
+  }
+  .audio-bar-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, var(--lantern-gold), var(--sunset-coral));
+    border-radius:999px;
+  }
+  .audio-time{
+    margin-top:8px;
+    font-size:0.75rem;
+    opacity:0.75;
+  }
+    margin-top:16px;
+    font-size:0.85rem;
+    opacity:0.7;
+  }
+  .video-fallback a{
+    color:var(--neon-cyan);
+    text-decoration:none;
+    border-bottom:1px dashed rgba(95,227,255,0.5);
+  }
+  .video-fallback a:hover{opacity:0.85;}
+
+  /* ---------- FOTO ---------- */
+  .photo-section{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding-top:2vh;
+    padding-bottom:6vh;
+  }
+  .photo-frame{
+    position:relative;
+    width:min(86vw, 380px);
+    background:#fdf6e9;
+    padding:14px 14px 46px;
+    border-radius:6px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.05);
+    transform:rotate(-2deg);
+    transition:transform .3s ease;
+  }
+  .photo-frame:hover{transform:rotate(0deg) scale(1.02);}
+  .photo-inner{
+    width:100%;
+    aspect-ratio:4/5;
+    border-radius:2px;
+    overflow:hidden;
+    background:linear-gradient(160deg, #3a1750, #7a2e4d 60%, var(--sunset-orange));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .photo-inner img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .photo-placeholder{
+    color:rgba(255,255,255,0.75);
+    text-align:center;
+    font-size:0.9rem;
+    padding:20px;
+    line-height:1.6;
+  }
+  .photo-placeholder .icon{
+    font-size:2rem;
+    display:block;
+    margin-bottom:8px;
+  }
+  .photo-caption{
+    text-align:center;
+    margin-top:14px;
+    font-family:'Shippori Mincho', serif;
+    color:var(--ink);
+    font-size:1.05rem;
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline-section{
+    max-width:720px;
+    margin:0 auto;
+    padding-top:4vh;
+    padding-bottom:8vh;
+  }
+  .timeline-title{
+    text-align:center;
+    font-size:clamp(1.8rem,5vw,2.6rem);
+    margin-bottom:8px;
+    color:var(--paper);
+  }
+  .timeline-title span{color:var(--sunset-coral);}
+  .timeline-caption{
+    text-align:center;
+    opacity:0.75;
+    margin-bottom:60px;
+    font-size:0.95rem;
+  }
+  .tl{
+    position:relative;
+    border-left:2px dashed rgba(255,194,209,0.35);
+    margin-left:18px;
+    padding-left:38px;
+  }
+  .tl-node{
+    position:relative;
+    margin-bottom:44px;
+    cursor:pointer;
+  }
+  .tl-node::before{
+    content:'';
+    position:absolute;
+    left:-47px;
+    top:4px;
+    width:16px;height:16px;
+    border-radius:50%;
+    background:var(--night-2);
+    border:2px solid var(--lantern-gold);
+    box-shadow:0 0 0 4px rgba(255,207,107,0.12);
+    transition:all .3s ease;
+  }
+  .tl-node.open::before{
+    background:var(--lantern-gold);
+    box-shadow:0 0 16px var(--lantern-gold);
+  }
+  .tl-date{
+    font-size:0.8rem;
+    color:var(--neon-cyan);
+    margin-bottom:6px;
+    display:inline-block;
+  }
+  .tl-label{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:1.15rem;
+    color:var(--paper);
+  }
+  .tl-icon{
+    font-size:1.1rem;
+    transition:transform .3s ease;
+  }
+  .tl-node.open .tl-icon{transform:rotate(90deg);}
+  .tl-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .5s ease, opacity .4s ease, margin .4s ease;
+    opacity:0;
+    font-size:0.98rem;
+    line-height:1.65;
+    color:rgba(251,242,226,0.9);
+    background:rgba(255,255,255,0.05);
+    border-left:2px solid var(--sunset-coral);
+    padding:0 16px;
+    border-radius:0 8px 8px 0;
+  }
+  .tl-node.open .tl-body{
+    max-height:220px;
+    opacity:1;
+    padding:14px 16px;
+    margin-top:10px;
+  }
+
+  /* ---------- CARTA / ENVELOPE ---------- */
+  .letter-section{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding-top:4vh;
+  }
+  .letter-intro h2{
+    font-size:clamp(1.8rem,5vw,2.6rem);
+    margin-bottom:6px;
+  }
+  .letter-intro p{
+    opacity:0.75;
+    margin-bottom:44px;
+  }
+
+  .envelope-wrap{
+    perspective:1200px;
+    width:min(90vw, 340px);
+  }
+  .envelope{
+    position:relative;
+    width:100%;
+    aspect-ratio:4/2.7;
+    cursor:pointer;
+  }
+  .env-back{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(160deg, #6e2b52, #3a1750);
+    border-radius:10px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.5), 0 0 40px rgba(255,111,76,0.15);
+  }
+  .env-flap{
+    position:absolute;
+    top:0; left:0; right:0;
+    height:52%;
+    background:linear-gradient(160deg, #ffb066, var(--sunset-coral));
+    clip-path:polygon(0 0, 100% 0, 50% 100%);
+    transform-origin:top center;
+    transition:transform .7s cubic-bezier(.4,.2,.2,1);
+    border-radius:10px 10px 0 0;
+    z-index:3;
+  }
+  .envelope.open .env-flap{
+    transform:rotateX(180deg);
+    z-index:1;
+  }
+  .env-seal{
+    position:absolute;
+    top:40%; left:50%;
+    transform:translate(-50%,-50%);
+    width:46px;height:46px;
+    background:radial-gradient(circle at 35% 30%, #ff8f6b, var(--sunset-coral) 70%);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.2rem;
+    box-shadow:0 4px 10px rgba(0,0,0,0.4);
+    z-index:4;
+    transition:opacity .3s ease .2s;
+  }
+  .envelope.open .env-seal{opacity:0; pointer-events:none;}
+  .env-paper{
+    position:absolute;
+    left:6%;
+    right:6%;
+    bottom:6%;
+    top:14%;
+    background:var(--paper);
+    border-radius:6px;
+    transform:translateY(6%);
+    transition:transform .7s cubic-bezier(.2,.7,.3,1) .15s;
+    z-index:2;
+    box-shadow:0 -2px 14px rgba(0,0,0,0.2) inset;
+  }
+  .envelope.open .env-paper{
+    transform:translateY(-58%);
+  }
+  .env-hint{
+    margin-top:24px;
+    font-size:0.85rem;
+    opacity:0.7;
+  }
+
+  .letter-modal{
+    position:fixed;
+    inset:0;
+    z-index:50;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:4vh 4vw;
+    background:rgba(15,6,28,0.72);
+    backdrop-filter:blur(6px);
+  }
+  .letter-modal.show{display:flex;}
+  .letter-paper{
+    position:relative;
+    background:linear-gradient(180deg, var(--paper), var(--paper-dark));
+    color:var(--ink);
+    max-width:620px;
+    width:100%;
+    max-height:82vh;
+    overflow-y:auto;
+    border-radius:10px;
+    padding:44px 40px;
+    box-shadow:0 30px 80px rgba(0,0,0,0.5);
+    font-family:'Zen Maru Gothic', sans-serif;
+    line-height:1.9;
+    font-size:1.02rem;
+    animation:paperIn .5s ease;
+  }
+  @keyframes paperIn{
+    from{opacity:0; transform:translateY(30px) scale(0.97);}
+    to{opacity:1; transform:translateY(0) scale(1);}
+  }
+  .letter-paper h3{
+    font-size:1.4rem;
+    margin-top:0;
+    color:#a13a52;
+    text-align:center;
+  }
+  .letter-paper .sign{
+    text-align:right;
+    margin-top:30px;
+    font-family:'Shippori Mincho', serif;
+    font-size:1.2rem;
+    color:#a13a52;
+  }
+  .close-letter{
+    position:absolute;
+    top:14px; right:16px;
+    background:none;
+    border:none;
+    font-size:1.3rem;
+    color:#a13a52;
+    cursor:pointer;
+    line-height:1;
+  }
+  .corner-blossom{
+    position:absolute;
+    top:-10px; left:-10px;
+    font-size:2rem;
+    opacity:0.6;
+    transform:rotate(-20deg);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:8vh 6vw 10vh;
+    opacity:0.75;
+    font-size:0.85rem;
+  }
+  .heart-btn{
+    margin-top:18px;
+    background:none;
+    border:1px solid rgba(255,194,209,0.4);
+    color:var(--paper);
+    padding:10px 22px;
+    border-radius:999px;
+    cursor:pointer;
+    font-family:'Zen Maru Gothic', sans-serif;
+    transition:all .25s ease;
+  }
+  .heart-btn:hover{
+    background:rgba(255,77,122,0.15);
+    border-color:var(--sunset-coral);
+  }
+
+  .floating-heart{
+    position:fixed;
+    z-index:60;
+    pointer-events:none;
+    font-size:1.4rem;
+    animation:floatUp 2.2s ease-out forwards;
+  }
+  @keyframes floatUp{
+    0%{opacity:1; transform:translateY(0) scale(0.8);}
+    100%{opacity:0; transform:translateY(-160px) scale(1.3);}
+  }
+
+  ::selection{background:var(--sunset-coral); color:white;}
+
+  /* ---------- MOBILE ---------- */
+  @media (max-width: 480px){
+    section{padding:5vh 6vw;}
+    .hero{gap:14px;}
+    .hero h1{font-size:clamp(2.6rem, 14vw, 4rem);}
+    .hero .sub{font-size:0.95rem; max-width:90vw;}
+    .eyebrow{font-size:0.65rem; letter-spacing:0.25em;}
+
+    .timeline-caption{margin-bottom:40px;}
+    .tl{margin-left:8px; padding-left:28px;}
+    .tl-node::before{left:-35px; width:14px; height:14px;}
+    .tl-node{margin-bottom:34px;}
+    .tl-label{font-size:1.02rem;}
+    .tl-body{font-size:0.92rem;}
+
+    .letter-intro h2{font-size:1.7rem;}
+    .letter-paper{padding:34px 22px; font-size:0.96rem; max-height:80vh;}
+    .letter-paper h3{font-size:1.25rem;}
+    .close-letter{top:10px; right:12px; font-size:1.4rem; padding:6px;}
+    .env-hint{font-size:0.75rem;}
+
+    .song-caption{margin-bottom:22px;}
+
+    .photo-frame{padding:10px 10px 36px;}
+
+    footer{padding:6vh 6vw 8vh;}
+    .heart-btn{padding:12px 24px; font-size:0.95rem;}
+  }
+
+  @media (max-width: 340px){
+    .hero h1{font-size:2.3rem;}
+    .letter-paper{padding:28px 16px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-sky"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow mono">13 · 06 · 2026 — 13 · 07 · 2026</div>
+  <h1 class="display">Un mes<br>hablando</h1>
+  <p class="sub">Un simple "hola" que se transformó en algo nuestro. Esta página guarda ese mes, memoria por memoria — y al final, una carta.</p>
+  <div class="lantern-row">
+    <span class="lantern-dot"></span>
+    <span class="lantern-dot"></span>
+    <span class="lantern-dot"></span>
+  </div>
+  <div class="scroll-hint mono">desliza ↓</div>
+</section>
+
+<!--
+  ================================================================
+  📸 AQUÍ VA LA FOTO — instrucciones:
+  1. Copia tu foto a la MISMA carpeta que este archivo .html
+  2. Cambia "TU-FOTO.jpg" de la línea de abajo por el nombre exacto
+     de tu archivo (ej: "nosotros.jpg", "foto1.png", etc.)
+  3. Si no pones ninguna foto, se muestra un cartel bonito avisando.
+  ================================================================
+-->
+<section class="photo-section">
+  <div class="photo-frame">
+    <div class="photo-inner">
+      <img src="TU-FOTO.jpg" alt="Foto de nosotros dos"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="photo-placeholder" style="display:none; flex-direction:column; align-items:center; justify-content:center; height:100%;">
+        <span class="icon">🌸</span>
+        Reemplaza "TU-FOTO.jpg"<br>por una foto de ustedes
+      </div>
+    </div>
+    <div class="photo-caption">nosotros</div>
+  </div>
+</section>
+<!-- 📸 FIN FOTO ================================================ -->
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <h2 class="timeline-title display">Nuestra <span>historia</span></h2>
+  <p class="timeline-caption">Toca cada momento para abrirlo</p>
+
+  <div class="tl" id="timeline">
+    <div class="tl-node">
+      <span class="tl-date mono">13 DE JUNIO</span>
+      <div class="tl-label"><span class="tl-icon">▸</span> Ese primer "hola"</div>
+      <div class="tl-body">Un mensaje cualquiera, un día cualquiera. No sabíamos que ese "hola" iba a ser el principio de todo esto.</div>
+    </div>
+    <div class="tl-node">
+      <span class="tl-date mono">LOS DÍAS SIGUIENTES</span>
+      <div class="tl-label"><span class="tl-icon">▸</span> Nuestros primeros audios</div>
+      <div class="tl-body">Empezamos a mandarnos audios de cualquier cosa. Tu voz se volvió algo que empecé a esperar todos los días.</div>
+    </div>
+    <div class="tl-node">
+      <span class="tl-date mono">UNA NOCHE</span>
+      <div class="tl-label"><span class="tl-icon">▸</span> La primera llamada</div>
+      <div class="tl-body">La primera llamada, esas que no querían terminar. Ahí empezamos a hablar de cualquier cosa hasta tarde.</div>
+    </div>
+    <div class="tl-node">
+      <span class="tl-date mono">UNA TARDE</span>
+      <div class="tl-label"><span class="tl-icon">▸</span> Esa tarde que te pusiste "rara"</div>
+      <div class="tl-body">Esa tarde rara que nunca olvidamos. Ahora, mirando para atrás, hasta eso se volvió parte bonita de la historia.</div>
+    </div>
+    <div class="tl-node">
+      <span class="tl-date mono">HOY · 13 DE JULIO</span>
+      <div class="tl-label"><span class="tl-icon">▸</span> Un mes hablando ❤</div>
+      <div class="tl-body">Y así estamos, Maite. Un mes después de ese "hola", con toda una historia recién empezando a escribirse.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CARTA -->
+<section class="letter-section">
+  <div class="letter-intro">
+    <h2 class="display">Una carta para ti</h2>
+    <p>Ábrela cuando estés lista</p>
+  </div>
+  <div class="envelope-wrap">
+    <div class="envelope" id="envelope">
+      <div class="env-back"></div>
+      <div class="env-paper"></div>
+      <div class="env-flap"></div>
+      <div class="env-seal">🌸</div>
+    </div>
+  </div>
+  <div class="env-hint mono">toca el sobre</div>
+</section>
+
+<div class="letter-modal" id="letterModal">
+  <div class="letter-paper">
+    <span class="corner-blossom">🌸</span>
+    <button class="close-letter" id="closeLetter">✕</button>
+    <h3>Para mi Maite</h3>
+    <p>Bueno, la verdad no sé cómo empezar esto. Usted sabe que a mí me cuesta expresarme, que las palabras casi nunca me salen como quiero, pero hoy voy a hacer el intento, porque usted merece que alguien sea detallista, y quiero ser yo.</p>
+    <p>Hoy se cumple un mes desde que hablamos por primera vez, ese 13 de junio. Un simple "hola" —de esos que uno manda sin pensar mucho— se transformó en todo esto que somos ahora. ¿Se acuerda de ese primer mensaje? Yo sí. Me acuerdo de cada cosa: nuestros primeros audios, la primera vez que le escuché la voz sin filtro, nuestra primera llamada que no queríamos que se acabara, esa tarde en que usted se puso rara y yo no sabía si preocuparme o quedarme callado nomás.</p>
+    <p>Y así estamos, amor mío. Un mes que para otros puede sonar a poco, pero que para mí ha sido gigante. Es raro pensar que la vida nos tuvo cruzándonos por esos mismos pasillos del liceo tanto tiempo, sin que ninguno de los dos supiera lo que se venía. A veces pienso: ojalá hubiéramos hablado antes, ojalá hubiéramos gastado todos los recreos juntos. Pero también pienso que quizás la vida sabía justo cuándo juntarnos, ni un día antes ni un día después.</p>
+    <p>No quiero apurar nada, Maite. Quiero que este primer mes hablando se quede grabado tal cual fue, con calma, porque sé que de aquí viene algo más grande: quiero que empecemos a salir, y quiero hacerlo bien, con usted primero.</p>
+    <p>Mientras tanto, ya es tarde para fingir que esto es poca cosa. Usted ya es mi adicción buena: la persona con la que puedo hablar de cualquier tontera hasta las mil de la madrugada y no aburrirme nunca, la que sin darse cuenta empezó a cuidarme en todo. Cada mensaje suyo me cambia el día, cada audio me hace sonreír solo, como tonto, mirando el celular.</p>
+    <p>Gracias por este mes, Maite. Por el "hola" que lo empezó todo, por aguantarme cuando no sé qué decir, por dejarme entrar así de a poco. La amo, de verdad, y esto recién empieza.</p>
+    <div class="sign">— Cristóbal 🌸</div>
+  </div>
+</div>
+
+<!--
+  ================================================================
+  🎵 AQUÍ VA LA CANCIÓN (mp3) — instrucciones:
+  1. Copia tu archivo mp3 a la MISMA carpeta que este archivo .html
+  2. Cambia "cancion.mp3" en el <source> de abajo por el nombre
+     exacto de tu archivo (ej: "solamente-tu.mp3")
+  3. Eso es todo — el reproductor ya está armado y estilizado.
+  ================================================================
+-->
+<section class="song-section">
+  <h2 class="song-title display">Nuestra <span>canción</span></h2>
+  <p class="song-caption">"Solamente Tú" — <strong>Pablo Alborán</strong></p>
+
+  <div class="audio-player">
+    <button class="audio-play-btn" id="audioPlayBtn" aria-label="Reproducir">
+      <span class="icon-play">▶</span>
+      <span class="icon-pause">❚❚</span>
+    </button>
+    <div class="audio-info">
+      <div class="audio-bar-track" id="audioBarTrack">
+        <div class="audio-bar-fill" id="audioBarFill"></div>
+      </div>
+      <div class="audio-time mono">
+        <span id="audioCurrent">0:00</span> / <span id="audioDuration">0:00</span>
+      </div>
+    </div>
+    <!-- 🎵 CAMBIA "cancion.mp3" POR EL NOMBRE DE TU ARCHIVO -->
+    <audio id="audioEl" src="cancion.mp3" preload="metadata"></audio>
+  </div>
+  <p class="video-fallback" id="audioFallback" style="display:none;">
+    No encontré el archivo de audio. Revisa que "cancion.mp3" esté en la misma carpeta que este HTML.
+  </p>
+</section>
+<!-- 🎵 FIN CANCIÓN =============================================== -->
+
+<footer>
+  <div class="mono">13.06.2026 → 13.07.2026</div>
+  <p>gracias por este primer mes.</p>
+  <button class="heart-btn" id="heartBtn">soltar corazones 💕</button>
+</footer>
+
+<script>
+// ---------- Audio player (mp3) ----------
+const audioEl = document.getElementById('audioEl');
+const audioPlayBtn = document.getElementById('audioPlayBtn');
+const audioBarTrack = document.getElementById('audioBarTrack');
+const audioBarFill = document.getElementById('audioBarFill');
+const audioCurrent = document.getElementById('audioCurrent');
+const audioDuration = document.getElementById('audioDuration');
+const audioFallback = document.getElementById('audioFallback');
+
+function fmtTime(s){
+  if(!isFinite(s)) return '0:00';
+  const m = Math.floor(s/60);
+  const sec = Math.floor(s%60).toString().padStart(2,'0');
+  return `${m}:${sec}`;
+}
+
+audioEl.addEventListener('loadedmetadata', ()=>{
+  audioDuration.textContent = fmtTime(audioEl.duration);
+});
+audioEl.addEventListener('timeupdate', ()=>{
+  audioCurrent.textContent = fmtTime(audioEl.currentTime);
+  audioBarFill.style.width = (audioEl.currentTime/audioEl.duration*100 || 0) + '%';
+});
+audioEl.addEventListener('ended', ()=>{
+  audioPlayBtn.classList.remove('playing');
+});
+audioEl.addEventListener('error', ()=>{
+  audioFallback.style.display = 'block';
+});
+
+audioPlayBtn.addEventListener('click', ()=>{
+  if(audioEl.paused){
+    audioEl.play().catch(()=>{ audioFallback.style.display = 'block'; });
+    audioPlayBtn.classList.add('playing');
+  } else {
+    audioEl.pause();
+    audioPlayBtn.classList.remove('playing');
+  }
+});
+
+audioBarTrack.addEventListener('click', (e)=>{
+  const rect = audioBarTrack.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  if(isFinite(audioEl.duration)) audioEl.currentTime = pct * audioEl.duration;
+});
+
+// ---------- Timeline interaction ----------
+document.querySelectorAll('.tl-node').forEach(node=>{
+  node.addEventListener('click', ()=>{
+    node.classList.toggle('open');
+  });
+});
+
+// ---------- Envelope ----------
+const envelope = document.getElementById('envelope');
+const letterModal = document.getElementById('letterModal');
+const closeLetter = document.getElementById('closeLetter');
+
+envelope.addEventListener('click', ()=>{
+  envelope.classList.add('open');
+  setTimeout(()=>{
+    letterModal.classList.add('show');
+  }, 550);
+});
+
+closeLetter.addEventListener('click', ()=>{
+  letterModal.classList.remove('show');
+  envelope.classList.remove('open');
+});
+letterModal.addEventListener('click', (e)=>{
+  if(e.target === letterModal){
+    letterModal.classList.remove('show');
+    envelope.classList.remove('open');
+  }
+});
+
+// ---------- Floating hearts ----------
+const heartBtn = document.getElementById('heartBtn');
+heartBtn.addEventListener('click', ()=>{
+  for(let i=0;i<12;i++){
+    setTimeout(()=>{
+      const h = document.createElement('div');
+      h.className = 'floating-heart';
+      h.textContent = ['💕','🌸','❤️','✨'][Math.floor(Math.random()*4)];
+      h.style.left = (20 + Math.random()*60) + 'vw';
+      h.style.bottom = '10vh';
+      document.body.appendChild(h);
+      setTimeout(()=>h.remove(), 2300);
+    }, i*80);
+  }
+});
+</script>
+
+</body>
+</html>
